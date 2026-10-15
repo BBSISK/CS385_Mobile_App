@@ -22,7 +22,8 @@ Built for **CS385 Mobile Apps Development** (Maynooth University, 2026–27) und
 |---|---|
 | **Upload** | List an item with up to 3 photos (camera or gallery), title, description, category, condition and campus pickup location |
 | **Marketplace** | Browse, search and filter available items; view item details; request an item |
-| **Account status** | Your carbon-credit balance, CO2e saved, your listings, requests made and received, and exchange history |
+| **Account status** | Your carbon-credit balance (with analytics deepdive), CO2e saved, requests made and received, and exchange history |
+| **Account Profile** | Collection of User's listed items , reviews / feedback , cross reference to carbon credit balance, Messaging ? |
 | **Admin** | All transactions with filters, analytics (KPI tiles and charts), and moderation of reported listings |
 
 ### The exchange loop
