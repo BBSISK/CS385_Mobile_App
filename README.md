@@ -1,4 +1,4 @@
-# CS385 Student Marketplace
+# CS385 Student Marketplace Oct 2026
 
 A free swap marketplace for Maynooth University students. Students give away things they no longer need (clothes, electrical items, books, furniture, kitchenware) to other students, and **earn carbon credits for every completed exchange**.
 
