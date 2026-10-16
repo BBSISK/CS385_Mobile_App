@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { calculateCredits, CREDITS_BY_CATEGORY, Category } from '../calculateCredits';
 
 describe('calculateCredits', () => {
