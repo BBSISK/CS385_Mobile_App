@@ -18,13 +18,13 @@ Built for **CS385 Mobile Apps Development** (Maynooth University, 2026–27) und
 
 ## Features
 
-| Screen | What it does |
-|---|---|
-| **Upload** | List an item with up to 3 photos (camera or gallery), title, description, category, condition and campus pickup location |
-| **Marketplace** | Browse, search and filter available items; view item details; request an item |
-| **Account status** | Your carbon-credit balance (with analytics deepdive), CO2e saved, requests made and received, and exchange history |
-| **Account Profile** | Collection of User's listed items , reviews / feedback , cross reference to carbon credit balance, Messaging ? |
-| **Admin** | All transactions with filters, analytics (KPI tiles and charts), and moderation of reported listings |
+| Screen              | What it does                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **Upload**          | List an item with up to 3 photos (camera or gallery), title, description, category, condition and campus pickup location |
+| **Marketplace**     | Browse, search and filter available items; view item details; request an item                                            |
+| **Account status**  | Your carbon-credit balance (with analytics deepdive), CO2e saved, requests made and received, and exchange history       |
+| **Account Profile** | Collection of User's listed items , reviews / feedback , cross reference to carbon credit balance, Messaging ?           |
+| **Admin**           | All transactions with filters, analytics (KPI tiles and charts), and moderation of reported listings                     |
 
 ### The exchange loop
 
@@ -40,16 +40,16 @@ Upload item → Another student requests it → Owner accepts
 
 ## Tech stack
 
-| Area | Choice |
-|---|---|
-| App | React Native with **Expo** |
-| Language | **TypeScript** (strict mode) |
-| Navigation | Expo Router (tabs: Marketplace, Upload, Account; admin-only route) |
-| Backend | *To be decided in Sprint 1: Firebase or Supabase* (see `docs/adr-001-backend.md`) |
-| Data fetching | Typed API layer in `src/api` with query hooks |
-| Testing | Jest, React Native Testing Library, end-to-end flow test |
-| Quality | ESLint, Prettier, Husky pre-commit hooks, GitHub Actions CI |
-| Project management | Jira (Scrum, 1-week sprints): space **CS385** |
+| Area               | Choice                                                                            |
+| ------------------ | --------------------------------------------------------------------------------- |
+| App                | React Native with **Expo**                                                        |
+| Language           | **TypeScript** (strict mode)                                                      |
+| Navigation         | Expo Router (tabs: Marketplace, Upload, Account; admin-only route)                |
+| Backend            | _To be decided in Sprint 1: Firebase or Supabase_ (see `docs/adr-001-backend.md`) |
+| Data fetching      | Typed API layer in `src/api` with query hooks                                     |
+| Testing            | Jest, React Native Testing Library, end-to-end flow test                          |
+| Quality            | ESLint, Prettier, Husky pre-commit hooks, GitHub Actions CI                       |
+| Project management | Jira (Scrum, 1-week sprints): space **CS385**                                     |
 
 ---
 
@@ -106,13 +106,13 @@ docs/                Decision records, data model, carbon-credit sources, contri
 
 ## Data model (draft)
 
-| Entity | Key fields |
-|---|---|
-| **User** | id, email (Maynooth), displayName, course, role (`student` / `admin`) |
-| **Item** | id, ownerId, title, description, category, condition, pickupLocation, photos[], status (`available` → `reserved` → `given`) |
-| **Request** | id, itemId, requesterId, message, status (`pending` / `accepted` / `declined`) |
-| **Exchange** | id, itemId, giverId, receiverId, status (`accepted` → `completed` / `cancelled`), giverConfirmed, receiverConfirmed |
-| **CreditLedger** | id, userId, exchangeId, credits, kgCO2e, createdAt (append-only) |
+| Entity           | Key fields                                                                                                                  |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **User**         | id, email (Maynooth), displayName, course, role (`student` / `admin`)                                                       |
+| **Item**         | id, ownerId, title, description, category, condition, pickupLocation, photos[], status (`available` → `reserved` → `given`) |
+| **Request**      | id, itemId, requesterId, message, status (`pending` / `accepted` / `declined`)                                              |
+| **Exchange**     | id, itemId, giverId, receiverId, status (`accepted` → `completed` / `cancelled`), giverConfirmed, receiverConfirmed         |
+| **CreditLedger** | id, userId, exchangeId, credits, kgCO2e, createdAt (append-only)                                                            |
 
 ### Carbon credits
 
@@ -126,11 +126,11 @@ Credits depend on the item's category: larger or more carbon-intensive items ear
 
 Every piece of work starts from a Jira ticket. Putting the ticket key in all three places links the work to Jira automatically:
 
-| | Format | Example |
-|---|---|---|
-| Branch | `CS385-<ticket>-short-desc` | `CS385-27-upload-form` |
-| Commit | `CS385-<ticket> message` | `CS385-27 add title validation` |
-| PR title | `CS385-<ticket> Title` | `CS385-27 Upload form validation` |
+|          | Format                      | Example                           |
+| -------- | --------------------------- | --------------------------------- |
+| Branch   | `CS385-<ticket>-short-desc` | `CS385-27-upload-form`            |
+| Commit   | `CS385-<ticket> message`    | `CS385-27 add title validation`   |
+| PR title | `CS385-<ticket> Title`      | `CS385-27 Upload form validation` |
 
 - `main` is protected: all changes go through a **pull request with 1 approval**, and force pushes are blocked.
 - Fill in the PR template checklist on every PR.
@@ -157,17 +157,17 @@ A ticket is **Done** when:
 
 ## Sprint plan
 
-| Sprint | Dates | Goal |
-|---|---|---|
-| 1 – Foundations | 19–25 Oct | Idea approved against the theme; repo, scaffold, wireframes, backend chosen, data model |
-| 2 – Auth & API | 26 Oct – 1 Nov | Maynooth-email sign-up and login; typed API layer; CI; UI kit |
-| 3 – Upload | 2–8 Nov | Post an item with photos; security rules; admin role |
-| 4 – Marketplace | 9–15 Nov | Browse, search, item detail, request an item; unit tests |
-| 5 – Exchanges | 16–22 Nov | Full exchange loop; carbon credits awarded exactly once |
-| 6 – Account | 23–29 Nov | Account status screen; seed data; analytics queries |
-| 7 – Admin | 30 Nov – 6 Dec | Transactions, analytics charts, moderation; **feature-complete** |
-| 8 – Test & polish | 7–13 Dec | Feature freeze; end-to-end test; accessibility; commenting pass |
-| 9 – Submit | 14–18 Dec | Screencast recorded; code and video submitted |
+| Sprint            | Dates          | Goal                                                                                    |
+| ----------------- | -------------- | --------------------------------------------------------------------------------------- |
+| 1 – Foundations   | 19–25 Oct      | Idea approved against the theme; repo, scaffold, wireframes, backend chosen, data model |
+| 2 – Auth & API    | 26 Oct – 1 Nov | Maynooth-email sign-up and login; typed API layer; CI; UI kit                           |
+| 3 – Upload        | 2–8 Nov        | Post an item with photos; security rules; admin role                                    |
+| 4 – Marketplace   | 9–15 Nov       | Browse, search, item detail, request an item; unit tests                                |
+| 5 – Exchanges     | 16–22 Nov      | Full exchange loop; carbon credits awarded exactly once                                 |
+| 6 – Account       | 23–29 Nov      | Account status screen; seed data; analytics queries                                     |
+| 7 – Admin         | 30 Nov – 6 Dec | Transactions, analytics charts, moderation; **feature-complete**                        |
+| 8 – Test & polish | 7–13 Dec       | Feature freeze; end-to-end test; accessibility; commenting pass                         |
+| 9 – Submit        | 14–18 Dec      | Screencast recorded; code and video submitted                                           |
 
 ---
 
@@ -183,12 +183,12 @@ Individual engagement is assessed in the **6 project labs**. Each member's work 
 
 ## Team
 
-| Member | Role |
-|---|---|
-| Barry Sisk | Lead / Scrum Master |
-| Aisha Hussein | *TBC* |
-| Sean Keane | *TBC* |
-| *TBC* | *TBC* |
+| Member        | Role                |
+| ------------- | ------------------- |
+| Barry Sisk    | Lead / Scrum Master |
+| Aisha Hussein | _TBC_               |
+| Sean Keane    | _TBC_               |
+| _TBC_         | _TBC_               |
 
 Roles: **Lead / Scrum Master**, **Frontend**, **Backend**, **QA / Design**. Everyone writes code, tests and comments.
 
