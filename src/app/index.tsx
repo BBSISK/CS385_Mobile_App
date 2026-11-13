@@ -4,7 +4,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Minted MU, hello world</Text>
-      <Text style={styles.p}>A campus wide donation platform</Text>
+      <Text style={styles.subtitle}>A campus wide donation platform</Text>
     </View>
   );
 }
