@@ -17,6 +17,9 @@ function TabsLayout() {
 
   return (
     <Tabs
+      // "history" makes the back button return to the previous screen (e.g. a category list)
+      // instead of always jumping to the first tab.
+      backBehavior="history"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: t.colors.primary,
@@ -36,17 +39,22 @@ function TabsLayout() {
           }}
         />
       ))}
+      {/*
+        Item detail and category lists are reached from cards, not from the tab bar.
+        Hide only their tab button: `href: null` would hide the button but also make the
+        route unreachable, so tapping a card did nothing.
+      */}
       <Tabs.Screen
         name="item/[id]"
         options={{
-          href: null,
+          tabBarButton: () => null,
           tabBarStyle: { display: 'none' },
         }}
       />
       <Tabs.Screen
         name="category/[name]"
         options={{
-          href: null,
+          tabBarButton: () => null,
         }}
       />
     </Tabs>
