@@ -12,11 +12,13 @@ export const browseCategories = [
 
 /**
  * Builds a phone-sized Unsplash image URL (600 px wide, compressed) from a photo ID.
+ * `fm=jpg` forces JPEG: with `auto=format` Unsplash may send AVIF, which Expo Go on Android
+ * can't always display.
  * All item photos are free to use under the Unsplash License; credits are in
  * docs/image-credits.md and on each item's `imageCredit`.
  */
 const unsplash = (photoId: string) =>
-  `https://images.unsplash.com/${photoId}?w=600&q=70&auto=format&fit=crop`;
+  `https://images.unsplash.com/${photoId}?w=600&q=70&fm=jpg&fit=crop`;
 
 export const items = [
   {
