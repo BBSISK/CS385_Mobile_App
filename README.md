@@ -1,10 +1,32 @@
-# CS385 Student Marketplace Oct 2026
+# MintedMU: CS385 Student Marketplace
 
-A free swap marketplace for Maynooth University students. Students give away things they no longer need (clothes, electrical items, books, furniture, kitchenware) to other students, and **earn carbon credits for every completed exchange**.
+A free swap marketplace for Maynooth University students. Students give away things they no longer need to other students, and **earn carbon credits for every completed exchange**.
+
+The **MVP covers clothing**. Books, electrical goods, furniture and kitchenware will follow once the clothing loop works end to end.
 
 Built for **CS385 Mobile Apps Development** (Maynooth University, 2026–27) under the module theme **"A sustainable environment"**.
 
 ![CI](https://github.com/BBSISK/CS385_Mobile_App/actions/workflows/ci.yml/badge.svg)
+
+---
+
+## Current status (20 November 2026, Sprint 5)
+
+| Area                                                                        | Status                                                                 |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| App shell, navigation and UI (Home, Browse, Item detail, Wardrobe, Profile) | ✅ Built with mock data                                                |
+| Carbon calculator (kg CO₂e and points per clothing item)                    | ✅ Done, using a Climatiq / UK government factor                       |
+| Carbon estimate on Item detail                                              | ✅ Done                                                                |
+| Credit ledger rules (awarded once, both users, campus totals)               | ✅ Done as tested pure functions                                       |
+| Profile carbon totals                                                       | ✅ Calculated from a mock ledger through `src/api`                     |
+| Climatiq client (request, error handling, fallback)                         | ✅ Done and tested (`supabase/functions/_shared/climatiq.ts`)          |
+| Supabase backend (auth, tables, security rules)                             | 🔄 In progress. Spec for the carbon tables: `docs/carbon-data-spec.md` |
+| Profile and admin totals read from Supabase instead of mock data            | ⏳ Waiting on the Supabase project (only `src/api/carbon.ts` changes)  |
+| `refresh-carbon-factors` Edge Function                                      | ⏳ Waiting on the Supabase project                                     |
+| Upload ("List") screen                                                      | ⏳ Placeholder                                                         |
+| Messages                                                                    | ⏳ Placeholder                                                         |
+| Admin dashboard                                                             | ⏳ Not started                                                         |
+| Tooling: ESLint, Prettier, Husky, Jest, CI                                  | ✅ Done                                                                |
 
 ---
 
@@ -18,13 +40,17 @@ Built for **CS385 Mobile Apps Development** (Maynooth University, 2026–27) und
 
 ## Features
 
-| Screen              | What it does                                                                                                             |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **Upload**          | List an item with up to 3 photos (camera or gallery), title, description, category, condition and campus pickup location |
-| **Marketplace**     | Browse, search and filter available items; view item details; request an item                                            |
-| **Account status**  | Your carbon-credit balance (with analytics deepdive), CO2e saved, requests made and received, and exchange history       |
-| **Account Profile** | Collection of User's listed items , reviews / feedback , cross reference to carbon credit balance, Messaging ?           |
-| **Admin**           | All transactions with filters, analytics (KPI tiles and charts), and moderation of reported listings                     |
+| Screen            | File                                        | What it does                                                                                            | Status                |
+| ----------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------- |
+| **Home**          | `src/app/index.tsx`                         | Search and filter chips (All, Women, Men, Sportswear, Designer) over the latest items                   | Built (mock data)     |
+| **Browse**        | `src/app/browse.tsx`, `category/[name].tsx` | Category tiles (Tops, Bottoms, Outerwear, Dresses, Footwear, Accessories, Bags), then a searchable list | Built (mock data)     |
+| **Item detail**   | `src/app/item/[id].tsx`                     | Photos, condition, size, pickup, **carbon saving and points**, Request and Like                         | Built (mock data)     |
+| **List (Upload)** | `src/app/list.tsx`                          | List an item with up to 3 photos, title, description, sub-category, condition and pickup location       | Placeholder           |
+| **Wardrobe**      | `src/app/wardrobe.tsx`                      | My items (Active / Liked / Completed), Messages, Scheduled hand-overs and Requests                      | Built except Messages |
+| **Profile**       | `src/app/profile.tsx`                       | Dashboard (**carbon points**, items donated, review average, **kg CO₂e saved**), Reviews, Notifications | Built (mock data)     |
+| **Admin**         | —                                           | All transactions with filters, analytics (KPI tiles and charts), and moderation of reported listings    | Not started           |
+
+Ideas still to decide: an analytics deep-dive on carbon credits, and messaging between students.
 
 ### The exchange loop
 
@@ -42,12 +68,14 @@ Upload item → Another student requests it → Owner accepts
 
 | Area               | Choice                                                                            |
 | ------------------ | --------------------------------------------------------------------------------- |
-| App                | React Native with **Expo**                                                        |
+| App                | React Native 0.88 with **Expo SDK 58** (React 19.3)                               |
 | Language           | **TypeScript** (strict mode)                                                      |
-| Navigation         | Expo Router (tabs: Marketplace, Upload, Account; admin-only route)                |
-| Backend            | _To be decided in Sprint 1: Firebase or Supabase_ (see `docs/adr-001-backend.md`) |
-| Data fetching      | Typed API layer in `src/api` with query hooks                                     |
-| Testing            | Jest, React Native Testing Library, end-to-end flow test                          |
+| UI                 | **React Native Paper** (Material 3), designed from the Figma Material 3 kit       |
+| Navigation         | Expo Router, routes in `src/app` (tabs: Home, Browse, List, Wardrobe, Profile)    |
+| Backend            | **Supabase** (in progress): auth, Postgres, Row Level Security, Edge Functions    |
+| Carbon data        | **Climatiq** API (UK government clothing factor), with an offline fallback table  |
+| Data fetching      | Typed data layer in `src/api` with hooks; screens never call the backend directly |
+| Testing            | Jest, React Native Testing Library; end-to-end flow test planned                  |
 | Quality            | ESLint, Prettier, Husky pre-commit hooks, GitHub Actions CI                       |
 | Project management | Jira (Scrum, 1-week sprints): space **CS385**                                     |
 
@@ -59,7 +87,7 @@ Upload item → Another student requests it → Owner accepts
 
 - Node.js (LTS) and npm
 - Git
-- The **Expo Go** app on your phone (iOS or Android), or an iOS Simulator / Android Emulator
+- The **Expo Go** app on your phone (iOS or Android), updated to support **SDK 58**. Each Expo Go version runs only one SDK, so an out-of-date Expo Go shows a loading circle and then "Something went wrong".
 
 ### Run the app
 
@@ -67,40 +95,56 @@ Upload item → Another student requests it → Owner accepts
 git clone https://github.com/BBSISK/CS385_Mobile_App.git
 cd CS385_Mobile_App
 npm install
-cp .env.example .env      # then fill in the backend keys (ask the team; never commit .env)
 npx expo start
 ```
 
-Scan the QR code with Expo Go (Android) or the Camera app (iOS).
+Scan the QR code from inside the Expo Go app (Android) or with the Camera app (iOS).
+
+**On campus Wi-Fi** (eduroam blocks phone-to-laptop connections), use a tunnel instead:
+
+```bash
+npx expo start -c --tunnel ngrok
+```
+
+Once Supabase is connected, the backend keys will go in a `.env` file (ask the team; never commit it).
 
 ### Useful scripts
 
 ```bash
-npm run lint        # ESLint
-npm run typecheck   # tsc --noEmit
-npm test            # Jest unit and component tests
-npm run seed        # load demo users, items and exchanges (dev database only)
+npm run lint          # ESLint
+npm run typecheck     # tsc --noEmit
+npm run format:check  # Prettier
+npm test              # Jest unit and component tests
+```
+
+CI runs all four on every pull request, and the `check` job must pass before merging. A `seed` script for demo data is planned once Supabase is ready.
+
+```bash
+npx expo install --check   # are our packages the versions SDK 58 expects?
 ```
 
 ---
 
-## Project structure (planned)
+## Project structure
 
 ```
-app/                 Screens and routes (Expo Router)
-  (tabs)/marketplace
-  (tabs)/upload
-  (tabs)/account
-  admin/
 src/
-  api/               Typed API client and data hooks; screens never call the backend directly
-  components/        Shared UI kit (Button, Card, TextInput, Chip, EmptyState…)
-  lib/               Pure logic, e.g. calculateCredits(), validation
-  types/             Shared TypeScript types
-  theme/             Colours, spacing, typography
-docs/                Decision records, data model, carbon-credit sources, contributions log
+  app/               Screens and routes (Expo Router): index, browse, list, wardrobe, profile,
+                     item/[id], category/[name], _layout (tab bar)
+  api/               Data layer and hooks, e.g. useCarbonSummary(); mock data now, Supabase later
+  components/        Shared UI (TopBar, ItemCard, ChipRow, StatCard, CarbonImpact…)
+  constants/         Theme (paperTheme.ts) and mock data (mockData.ts, mockExchanges.ts)
+  lib/               Pure, unit-tested logic: carbon.ts (estimates), ledger.ts (credit rules)
+  hooks/             Colour-scheme helpers
+supabase/functions/  Server-side code for Supabase Edge Functions (holds secret keys; the app must never import it)
+  _shared/climatiq.ts  Climatiq client: fetches the clothing factor, handles errors, falls back
+docs/                Carbon method and sources, Supabase data spec
 .github/             PR template and CI workflow
 ```
+
+Tests sit next to the code they test, in `__tests__` folders.
+
+A lint rule stops any file in `src/` importing from `supabase/functions`, so API keys can't end up in the app bundle.
 
 ---
 
@@ -112,11 +156,37 @@ docs/                Decision records, data model, carbon-credit sources, contri
 | **Item**         | id, ownerId, title, description, category, condition, pickupLocation, photos[], status (`available` → `reserved` → `given`) |
 | **Request**      | id, itemId, requesterId, message, status (`pending` / `accepted` / `declined`)                                              |
 | **Exchange**     | id, itemId, giverId, receiverId, status (`accepted` → `completed` / `cancelled`), giverConfirmed, receiverConfirmed         |
-| **CreditLedger** | id, userId, exchangeId, credits, kgCO2e, createdAt (append-only)                                                            |
+| **CreditLedger** | id, exchangeId, userId, role (`giver` / `receiver`), points, kgCO2e, createdAt (append-only; unique per exchange and user)  |
+| **CarbonFactor** | subcategory, weightKg, kgCO2ePerKg, source, climatiqActivityId, updatedAt                                                   |
+
+The Supabase tables, security rules and `complete_exchange()` function for the carbon data are specified in `docs/carbon-data-spec.md`.
 
 ### Carbon credits
 
-Credits depend on the item's category: larger or more carbon-intensive items earn more (e.g. Electrical > Clothes > Books). The credits are split between giver and receiver. Values and the sources for the CO2e estimates are documented in `docs/carbon-credits.md`. The logic lives in the pure, unit-tested function `calculateCredits()`.
+Each clothing sub-category has a typical weight. The saving from a swap is:
+
+```
+kg CO₂e saved = typical weight (kg) × 22.31 kg CO₂e per kg × 0.646
+points        = round(kg CO₂e saved × 10)
+```
+
+- **22.31 kg CO₂e per kg** is the UK government (BEIS/DESNZ) clothing factor, via Climatiq.
+- **0.646** is WRAP's displacement rate: about 65% of second-hand purchases replace buying new.
+- The estimate is deliberately conservative: it covers material production only, not transport, retail or washing.
+
+| Sub-category | kg CO₂e | Points |
+| ------------ | ------- | ------ |
+| Accessories  | 1.4     | 14     |
+| Tops         | 3.6     | 36     |
+| Dresses      | 4.3     | 43     |
+| Bottoms      | 7.2     | 72     |
+| Bags         | 8.6     | 86     |
+| Footwear     | 13.0    | 130    |
+| Outerwear    | 17.3    | 173    |
+
+**Rules:** both the giver and the receiver earn the full points; campus totals count each exchange's CO₂e once; credits are awarded once only per exchange and user.
+
+**Code:** `src/lib/carbon.ts` (estimates), `src/lib/ledger.ts` (credit rules), `src/components/CarbonImpact.tsx` (Item detail card), `src/api/carbon.ts` (data layer), `supabase/functions/_shared/climatiq.ts` (Climatiq client). Method, sources and limitations: `docs/carbon-credits.md`.
 
 ---
 
