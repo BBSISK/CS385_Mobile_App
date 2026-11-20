@@ -5,11 +5,13 @@ import { Searchbar } from 'react-native-paper';
 import ChipRow from '../components/ChipRow';
 import ItemCard from '../components/ItemCard';
 import TopBar from '../components/TopBar';
-import { categories, items } from '../constants/mockData';
+import { useItems } from '../api/items';
+import { categories } from '../constants/mockData';
 
 export default function HomeScreen() {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
+  const items = useItems(); // includes items listed in this session
 
   const shown = items.filter(
     (i) =>

@@ -5,13 +5,14 @@ import { FlatList, View } from 'react-native';
 import { Searchbar, Text, useTheme } from 'react-native-paper';
 import ItemCard from '../../components/ItemCard';
 import TopBar from '../../components/TopBar';
-import { items } from '../../constants/mockData';
+import { useItems } from '../../api/items';
 
 export default function CategoryItems() {
   const { name } = useLocalSearchParams<{ name: string }>();
   const router = useRouter();
   const theme = useTheme();
   const [query, setQuery] = useState('');
+  const items = useItems();
 
   const shown = items.filter(
     (i) => i.subcategory === name && i.title.toLowerCase().includes(query.toLowerCase()),
