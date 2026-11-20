@@ -6,7 +6,7 @@ import { Button, Divider, IconButton, Snackbar, Text, useTheme } from 'react-nat
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CarbonImpact from '../../components/CarbonImpact';
 import ItemImage from '../../components/ItemImage';
-import { items } from '../../constants/mockData';
+import { useItem } from '../../api/items';
 
 export default function ItemDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -16,7 +16,7 @@ export default function ItemDetail() {
   const [liked, setLiked] = useState(false);
   const [requested, setRequested] = useState(false);
 
-  const item = items.find((i) => i.id === id);
+  const item = useItem(id);
 
   if (!item) {
     return (
@@ -60,12 +60,16 @@ export default function ItemDetail() {
             <CarbonImpact subcategory={item.subcategory} />
           </View>
 
-          <Divider style={{ marginVertical: 16 }} />
-
-          <Text variant="titleSmall">Description</Text>
-          <Text variant="bodyMedium" style={{ marginTop: 4 }}>
-            {item.description}
-          </Text>
+          {/* Description is optional when listing, so only show the section if there is one. */}
+          {item.description !== '' && (
+            <>
+              <Divider style={{ marginVertical: 16 }} />
+              <Text variant="titleSmall">Description</Text>
+              <Text variant="bodyMedium" style={{ marginTop: 4 }}>
+                {item.description}
+              </Text>
+            </>
+          )}
 
           <Divider style={{ marginVertical: 16 }} />
 

@@ -8,7 +8,8 @@ import ScheduledRow from '../components/ScheduledRow';
 import TopBar from '../components/TopBar';
 import TopTabs from '../components/TopTabs';
 import TransactionRow from '../components/TransactionRow';
-import { items, scheduled as scheduledData, transactions } from '../constants/mockData';
+import { useItems } from '../api/items';
+import { scheduled as scheduledData, transactions } from '../constants/mockData';
 
 const sections = ['My items', 'Messages', 'Scheduled'];
 const statuses = ['Active', 'Liked', 'Completed'];
@@ -20,6 +21,7 @@ export default function Wardrobe() {
   const [status, setStatus] = useState('Active');
   const [scheduleView, setScheduleView] = useState('Scheduled');
   const [scheduled, setScheduled] = useState(scheduledData);
+  const items = useItems();
 
   const shown = items.filter((i) => i.status === status);
 

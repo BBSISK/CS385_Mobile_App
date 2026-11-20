@@ -1,6 +1,7 @@
 // src/components/ItemImage.tsx
 import { Image } from 'expo-image';
-import { View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Icon, useTheme } from 'react-native-paper';
 
 type Props = {
@@ -14,16 +15,18 @@ type Props = {
 
 /**
  * An item's photo, filling its container (the container sets the size and rounded corners).
- * Falls back to the shape icon when an item has no photo yet, so new listings still look tidy.
+ * Shows the shape icon when an item has no photo, or when the photo fails to load
+ * (e.g. no internet), so a card is never left blank.
  */
 export default function ItemImage({ uri, label, iconSize = 64 }: Props) {
   const theme = useTheme();
+  const [failed, setFailed] = useState(false);
 
-  if (!uri) {
+  if (!uri || failed) {
     return (
       <View
         accessibilityLabel={`${label} (no photo)`}
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        style={[StyleSheet.absoluteFill, { alignItems: 'center', justifyContent: 'center' }]}
       >
         <Icon source="shape-outline" size={iconSize} color={theme.colors.outline} />
       </View>
@@ -38,7 +41,10 @@ export default function ItemImage({ uri, label, iconSize = 64 }: Props) {
       transition={200}
       // Remote photos load over the network, so keep a copy on the phone after the first load.
       cachePolicy="memory-disk"
-      style={{ width: '100%', height: '100%' }}
+      onError={() => setFailed(true)}
+      // absoluteFill fills the parent on every platform; percentage sizes inside an
+      // aspectRatio container aren't reliable on all phones.
+      style={StyleSheet.absoluteFill}
     />
   );
 }

@@ -25,6 +25,10 @@ describe('ItemImage', () => {
 });
 
 describe('mock item photos', () => {
+  it('requests JPEG, which every phone can display', () => {
+    items.forEach((item) => expect(item.image).toContain('fm=jpg'));
+  });
+
   it('every mock item has an Unsplash photo and a credit', () => {
     items.forEach((item) => {
       expect(item.image).toMatch(/^https:\/\/images\.unsplash\.com\/photo-/);

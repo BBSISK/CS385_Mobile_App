@@ -1,5 +1,15 @@
 export const categories = ['All', 'Women', 'Men', 'Sportswear', 'Designer'];
 
+/**
+ * Builds a phone-sized Unsplash image URL (600 px wide, compressed) from a photo ID.
+ * `fm=jpg` forces JPEG: with `auto=format` Unsplash may send AVIF, which Expo Go on Android
+ * can't always display.
+ * All item photos are free to use under the Unsplash License; credits are in
+ * docs/image-credits.md and on each item's `imageCredit`.
+ */
+export const unsplash = (photoId: string) =>
+  `https://images.unsplash.com/${photoId}?w=600&q=70&fm=jpg&fit=crop`;
+
 export const browseCategories = [
   'Tops',
   'Bottoms',
@@ -11,12 +21,52 @@ export const browseCategories = [
 ];
 
 /**
- * Builds a phone-sized Unsplash image URL (600 px wide, compressed) from a photo ID.
- * All item photos are free to use under the Unsplash License; credits are in
- * docs/image-credits.md and on each item's `imageCredit`.
+ * Photo for each Browse category tile (free under the Unsplash License; see docs/image-credits.md).
+ * Accessories reuses the silk scarf photo.
  */
-const unsplash = (photoId: string) =>
-  `https://images.unsplash.com/${photoId}?w=600&q=70&auto=format&fit=crop`;
+export const categoryImages: Record<
+  string,
+  { image: string; photographer: string; source: string }
+> = {
+  Tops: {
+    image: unsplash('photo-1792566369566-e13018cfdca0'),
+    photographer: 'AZUKI .V',
+    source: 'https://unsplash.com/photos/folded-t-shirts-in-color-gradient-ZVxatxTWrxw',
+  },
+  Bottoms: {
+    image: unsplash('photo-1567281280539-ef3e12f49370'),
+    photographer: 'Jordyn Weber',
+    source: 'https://unsplash.com/photos/blue-denim-jeans-rSlRMiQ4u14',
+  },
+  Outerwear: {
+    image: unsplash('photo-1773217509556-d64efab5f150'),
+    photographer: 'Kamilla Isalieva',
+    source:
+      'https://unsplash.com/photos/various-coats-and-jackets-hanging-on-a-closet-rack-Byk1g2DPQcI',
+  },
+  Dresses: {
+    image: unsplash('photo-1583316174775-bd6dc0e9f298'),
+    photographer: 'Markus Winkler',
+    source: 'https://unsplash.com/photos/womens-assorted-color-floral-dress-1lmPFQ7ZXeM',
+  },
+  Footwear: {
+    image: unsplash('photo-1675626400054-78f95a8d7c75'),
+    photographer: 'Derrick Payton',
+    source:
+      'https://unsplash.com/photos/a-pair-of-sneakers-with-blue-and-white-accents-LVmR_Pusqtg',
+  },
+  Accessories: {
+    image: unsplash('photo-1777795530497-205664bbd965'),
+    photographer: 'Branislav Rodman',
+    source:
+      'https://unsplash.com/photos/a-white-bust-with-a-colorful-scarf-draped-around-it-XJJRjzkYTiY',
+  },
+  Bags: {
+    image: unsplash('photo-1758818005874-f555e0932ef3'),
+    photographer: 'reza abdollahi',
+    source: 'https://unsplash.com/photos/a-textured-leather-tote-bag-with-tan-handles-A3CTF4T_erU',
+  },
+};
 
 export const items = [
   {

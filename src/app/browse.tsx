@@ -5,7 +5,7 @@ import { FlatList, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import CategoryTile from '../components/CategoryTile';
 import TopBar from '../components/TopBar';
-import { browseCategories } from '../constants/mockData';
+import { browseCategories, categoryImages } from '../constants/mockData';
 
 export default function Browse() {
   const router = useRouter();
@@ -31,6 +31,7 @@ export default function Browse() {
         renderItem={({ item }) => (
           <CategoryTile
             label={item}
+            image={categoryImages[item]?.image}
             onPress={() => router.push({ pathname: '/category/[name]', params: { name: item } })}
           />
         )}
