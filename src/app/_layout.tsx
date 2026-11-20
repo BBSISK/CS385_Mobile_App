@@ -42,12 +42,14 @@ function TabsLayout() {
       {/*
         Item detail and category lists are reached from cards, not from the tab bar.
         Hide only their tab button: `href: null` would hide the button but also make the
-        route unreachable, so tapping a card did nothing.
+        route unreachable, so tapping a card did nothing. `tabBarItemStyle: display none`
+        stops the hidden screens taking up empty space, so the five visible tabs spread evenly.
       */}
       <Tabs.Screen
         name="item/[id]"
         options={{
           tabBarButton: () => null,
+          tabBarItemStyle: { display: 'none' }, // don't reserve an empty slot in the tab bar
           tabBarStyle: { display: 'none' },
         }}
       />
@@ -55,6 +57,7 @@ function TabsLayout() {
         name="category/[name]"
         options={{
           tabBarButton: () => null,
+          tabBarItemStyle: { display: 'none' },
         }}
       />
     </Tabs>
