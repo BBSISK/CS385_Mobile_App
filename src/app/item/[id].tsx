@@ -2,9 +2,10 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Button, Divider, Icon, IconButton, Snackbar, Text, useTheme } from 'react-native-paper';
+import { Button, Divider, IconButton, Snackbar, Text, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CarbonImpact from '../../components/CarbonImpact';
+import ItemImage from '../../components/ItemImage';
 import { items } from '../../constants/mockData';
 
 export default function ItemDetail() {
@@ -36,11 +37,10 @@ export default function ItemDetail() {
             marginHorizontal: 16,
             borderRadius: 28,
             backgroundColor: theme.colors.secondaryContainer,
-            alignItems: 'center',
-            justifyContent: 'center',
+            overflow: 'hidden', // clip the photo to the rounded corners
           }}
         >
-          <Icon source="shape-outline" size={96} color={theme.colors.outline} />
+          <ItemImage uri={item.image} label={item.title} iconSize={96} />
           <IconButton
             icon={liked ? 'heart' : 'heart-outline'}
             mode="contained"

@@ -2,7 +2,8 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
-import { Icon, IconButton, Text, useTheme } from 'react-native-paper';
+import { IconButton, Text, useTheme } from 'react-native-paper';
+import ItemImage from './ItemImage';
 
 type Props = { item: any; showLike?: boolean };
 
@@ -21,11 +22,10 @@ export default function ItemCard({ item, showLike = true }: Props) {
           aspectRatio: 0.87,
           borderRadius: 28,
           backgroundColor: theme.colors.secondaryContainer,
-          alignItems: 'center',
-          justifyContent: 'center',
+          overflow: 'hidden', // clip the photo to the rounded corners
         }}
       >
-        <Icon source="shape-outline" size={64} color={theme.colors.outline} />
+        <ItemImage uri={item.image} label={item.title} />
         {showLike && (
           <IconButton
             icon={liked ? 'heart' : 'heart-outline'}

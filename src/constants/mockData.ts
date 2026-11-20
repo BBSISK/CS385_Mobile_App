@@ -10,10 +10,23 @@ export const browseCategories = [
   'Bags',
 ];
 
+/**
+ * Builds a phone-sized Unsplash image URL (600 px wide, compressed) from a photo ID.
+ * All item photos are free to use under the Unsplash License; credits are in
+ * docs/image-credits.md and on each item's `imageCredit`.
+ */
+const unsplash = (photoId: string) =>
+  `https://images.unsplash.com/${photoId}?w=600&q=70&auto=format&fit=crop`;
+
 export const items = [
   {
     id: '1',
     title: 'Denim jacket',
+    image: unsplash('photo-1602515931029-16b4a8ff505a'),
+    imageCredit: {
+      photographer: 'LOGAN WEAVER',
+      source: 'https://unsplash.com/photos/blue-denim-button-up-jacket--sM7LOq1_eU',
+    },
     condition: 'Good',
     size: 'M',
     category: 'Women',
@@ -27,6 +40,12 @@ export const items = [
   {
     id: '2',
     title: 'Rugby jersey',
+    image: unsplash('photo-1731341869734-f4cf8fe43a33'),
+    imageCredit: {
+      photographer: 'Samuel Yongbo Kwon',
+      source:
+        'https://unsplash.com/photos/a-football-jersey-hangs-in-the-corner-of-a-room-7796gicbWKA',
+    },
     condition: 'Like new',
     size: 'L',
     category: 'Sportswear',
@@ -39,6 +58,11 @@ export const items = [
   {
     id: '3',
     title: 'Wool coat',
+    image: unsplash('photo-1565532070333-43edd7d75c90'),
+    imageCredit: {
+      photographer: 'Baby Natur',
+      source: 'https://unsplash.com/photos/hanged-yellow-coat-ibTHy8t7JvM',
+    },
     condition: 'Fair',
     size: 'S',
     category: 'Men',
@@ -51,6 +75,12 @@ export const items = [
   {
     id: '4',
     title: 'Silk scarf',
+    image: unsplash('photo-1777795530497-205664bbd965'),
+    imageCredit: {
+      photographer: 'Branislav Rodman',
+      source:
+        'https://unsplash.com/photos/a-white-bust-with-a-colorful-scarf-draped-around-it-XJJRjzkYTiY',
+    },
     condition: 'New',
     size: 'One size',
     category: 'Designer',
@@ -63,6 +93,12 @@ export const items = [
   {
     id: '5',
     title: 'Running shorts',
+    image: unsplash('photo-1612032882906-2fa6f7b5f30f'),
+    imageCredit: {
+      photographer: 'Philip Strong',
+      source:
+        'https://unsplash.com/photos/man-in-black-shorts-running-on-track-field-during-daytime-SQvRd2EVqLM',
+    },
     condition: 'Good',
     size: 'M',
     category: 'Sportswear',
@@ -75,6 +111,11 @@ export const items = [
   {
     id: '6',
     title: 'Linen shirt',
+    image: unsplash('photo-1740711152088-88a009e877bb'),
+    imageCredit: {
+      photographer: 'Robert Richman',
+      source: 'https://unsplash.com/photos/a-blue-shirt-hanging-on-a-white-wall-vcTKFYNZop4',
+    },
     condition: 'Like new',
     size: 'L',
     category: 'Men',
